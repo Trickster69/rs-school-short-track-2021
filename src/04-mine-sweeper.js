@@ -21,8 +21,81 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+function minesweeper(matrix) {
+  const final = [];
+  let count = 0;
+  if (matrix[0].includes(true)) {
+    count = 1;
+  }
+  for (let i = 0; i < matrix.length; i++) {
+    const arr = [];
+    const str = matrix[i];
+    for (let b = 0; b < str.length; b++) {
+      if (i === 0) {
+        if (b === 0) {
+          if (str[b + 1] && matrix[i + 1][b]) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        } else if (b === 1) {
+          if ((str[b - 1] || str[b + 1]) && (matrix[i + 1][b])) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        } else if (b === 2) {
+          if (str[b - 1] && matrix[i + 1][b]) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        }
+      } else if (i > 0 && i < matrix.length - 1) {
+        if (b === 0) {
+          if ((matrix[i - 1][b] || matrix[i + 1][b]) && (str[b + 1])) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        } else if (b === 1) {
+          if ((matrix[i - 1][b] || matrix[i + 1][b]) && (str[b + 1] || str[b - 1])) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        } else if (b === 2) {
+          if ((matrix[i - 1][b] || matrix[i + 1][b]) && (str[b - 1])) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        }
+      } else if (i === matrix.length - 1) {
+        if (b === 0) {
+          if (str[b + 1] && matrix[i - 1][b]) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        } else if (b === 1) {
+          if ((str[b - 1] || str[b + 1]) && (matrix[i - 1][b])) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        } else if (b === 2) {
+          if (str[b - 1] && matrix[i - 1][b]) {
+            arr.push(count + 1);
+          } else {
+            arr.push(count);
+          }
+        }
+      }
+    }
+    final.push(arr);
+  }
+  return final;
 }
 
 module.exports = minesweeper;
